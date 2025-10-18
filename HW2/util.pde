@@ -2,6 +2,62 @@ public void CGLine(float x1, float y1, float x2, float y2) {
     // TODO HW1
     // Please paste your code from HW1 CGLine.
 
+    CGLine_Midpoint(x1, y1, x2, y2);
+}
+
+void CGLine_Midpoint(float x1_float, float y1_float, float x2_float, float y2_float) {
+    // Midpoint Line Algorithm Implementation
+
+    // Convert to integer for pixel coordinates
+    int x1 = (int)x1_float;
+    int y1 = (int)y1_float;
+    int x2 = (int)x2_float;
+    int y2 = (int)y2_float;
+
+    // Calculate differences and steps
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    
+    // Determine the direction of the line
+    int sx = (x1 < x2) ? 1 : -1;
+    int sy = (y1 < y2) ? 1 : -1;
+
+    // Check if the line is steep
+    boolean interchange = false;
+    if (dy > dx) {
+        int temp = dx;
+        dx = dy;
+        dy = temp;
+        interchange = true;
+    }
+
+    // Initialize the decision parameter
+    int p = 2 * dy - dx;
+    
+    // Starting point
+    int x = x1;
+    int y = y1;
+
+    // Draw the line
+    for (int i = 0; i <= dx; i++) {
+        drawPoint(x, y, color(0));
+
+        if (p >= 0) {
+            if (interchange) {
+                x += sx;
+            } else {
+                y += sy;
+            }
+            p -= 2 * dx;
+        }
+        
+        if (interchange) {
+            y += sy;
+        } else {
+            x += sx;
+        }
+        p += 2 * dy;
+    }
 }
 
 public boolean outOfBoundary(float x, float y) {
