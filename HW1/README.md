@@ -23,11 +23,10 @@
 ## Implementation Details
 
 ### 1. Line Algorithm
-
 - Use Midpoint line algorithm to draw lines.
-  - [`CGLine_Midpoint`](util.pde)
+  - [`CGLine_Midpoint()`](./util.pde)
 - Use Bresenham's line algorithm to draw lines.
-  - [`CGLine_Bresenham`](util.pde)
+  - [`CGLine_Bresenham()`](./util.pde)
 
 ![gif](assets/line.gif)
 
@@ -38,38 +37,34 @@
 ---
 
 ### 2. Circle Algorithm
-
 - Use Midpoint circle algorithm to draw circles.
-  - [`CGCircle_Midpoint`](util.pde)
+  - [`CGCircle_Midpoint()`](./util.pde)
 
 ![gif](assets/circle.gif)
 
 ---
 
 ### 3. Ellipse Algorithm
-
 - Use Midpoint ellipse algorithm to draw ellipses.
-  - [`CGEllipse_Midpoint`](util.pde)
+  - [`CGEllipse_Midpoint()`](./util.pde)
 
 ![gif](assets/ellipse.gif)
 
 ---
 
 ### 4. Curve Algorithm
-
 - Use Bernstein polynomials to draw curves.
-  - [`CGCurve_Bernstein`](util.pde)
+  - [`CGCurve_Bernstein()`](./util.pde)
 - Use De Casteljau's algorithm to draw curves.
-  - [`CGCurve_DeCasteljau`](util.pde)
+  - [`CGCurve_DeCasteljau()`](./util.pde)
 
 ![gif](assets/curve.gif)
 
 ---
 
 ### 5. Eraser
-
 - Use white rectangle to cover the area.
-  - [`CGEraser`](util.pde)
+  - [`CGEraser()`](./util.pde)
 
 ![gif](assets/eraser.gif)
 
