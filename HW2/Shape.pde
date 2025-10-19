@@ -21,8 +21,27 @@ public class Shape{
         loadPixels();       
         for(int i = int(minmax[0].x);i<=minmax[1].x;i++){
             for(int j = int(minmax[0].y);j<=minmax[1].y;j++){
-                if(pnpoly(i,j,t_pos)){                    
-                    drawPoint(i,j,color(100));
+                // if(pnpoly(i,j,t_pos)){                    
+                //     drawPoint(i,j,color(100));
+                // }
+                
+                // Initialize coverage count
+                int count = 0;
+
+                // 4x supersampling
+                float[][] offsets = {{0.25,0.25},{0.75,0.25},{0.25,0.75},{0.75,0.75}};
+                for(int k=0; k<4; k++){
+                    float sx = i + offsets[k][0];
+                    float sy = j + offsets[k][1];
+                    if(pnpoly(sx, sy, t_pos)){
+                        count++;
+                    }
+                }
+
+                // Draw the pixel with anti-aliasing
+                if(count > 0){
+                    int c = lerpColor(color(250), color(100), count/4.0);
+                    drawPoint(i, j, c);
                 }
             }
         }
