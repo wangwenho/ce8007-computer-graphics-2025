@@ -16,7 +16,7 @@
 
 | # | Content | Score | Finished |
 |---|---------|-------|----------|
-| 1 | Add some features that were not present in this assignment | 1.5 Semester Score | ❌ |
+| 1 | Add some features that were not present in this assignment. | 1.5 Semester Score | ❌ |
 
 ---
 
