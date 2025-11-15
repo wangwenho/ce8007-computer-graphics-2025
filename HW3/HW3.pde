@@ -62,8 +62,29 @@ String selectFile() {
 void cameraControl(){
     // You can write your own camera control function here.
     // Use setPositionOrientation(Vector3 position,Vector3 lookat) to modify the ViewMatrix.
-    // Hint : Use keyboard event and mouse click event to change the position of the camera.       
-        
-    main_camera.setPositionOrientation(cam_position, new Vector3(0,0,1));
+    // Hint : Use keyboard event and mouse click event to change the position of the camera.
+    
+    // WASDQE to move camera position
+    float speed = 0.1;
+    if (keyPressed) {
+        if (key == 'w' || key == 'W') cam_position.z += speed;
+        if (key == 's' || key == 'S') cam_position.z -= speed;
+        if (key == 'a' || key == 'A') cam_position.x -= speed;
+        if (key == 'd' || key == 'D') cam_position.x += speed;
+        if (key == 'q' || key == 'Q') cam_position.y += speed;
+        if (key == 'e' || key == 'E') cam_position.y -= speed;
+    }
 
+    // Mouse drag to rotate camera around lookat
+    if (mousePressed) {
+        float sensitivity = 0.01;
+        float dx = (mouseX - pmouseX) * sensitivity;
+        float dy = (mouseY - pmouseY) * sensitivity;
+        cam_position.x += dx;
+        cam_position.y += dy;
+    }
+
+    main_camera.setPositionOrientation(cam_position, lookat);
+
+    // main_camera.setPositionOrientation(cam_position, new Vector3(0,0,1));
 }

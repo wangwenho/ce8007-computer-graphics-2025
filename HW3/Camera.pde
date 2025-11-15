@@ -35,10 +35,10 @@ public class Camera {
     }
 
     void setSize(int w, int h, float n, float f) {
-        wid = w;
-        hei = h;
-        near = n;
-        far = f;
+        // wid = w;
+        // hei = h;
+        // near = n;
+        // far = f;
         
         // TODO HW3
         // This function takes four parameters, which are 
@@ -47,8 +47,27 @@ public class Camera {
         // Where GH_FOV has been declared as a global variable.
         // Finally, pass the result into projection matrix.
 
-        projection = Matrix4.Identity();
+        // Set class variables
+        wid = w;
+        hei = h;
+        near = n;
+        far = f;
 
+        // Calculate projection matrix
+        float aspect = (float)w / (float)h;
+        float fovRad = radians(GH_FOV);
+        float tanHalfFov = tan(fovRad / 2.0);
+
+        // Construct the perspective projection matrix
+        projection = Matrix4.Zero();
+        projection.m[0] = 1.0f / (aspect * tanHalfFov);
+        projection.m[5] = 1.0f / tanHalfFov;
+        projection.m[10] = -(far + near) / (far - near);
+        projection.m[11] = -1.0f;
+        projection.m[14] = -(2.0f * far * near) / (far - near);
+        projection.m[15] = 0.0f;
+
+        // projection = Matrix4.Identity();
     }
 
     void setPositionOrientation(Vector3 pos, float rotX, float rotY) {
@@ -62,6 +81,29 @@ public class Camera {
         // We uses topVector = (0,1,0) to calculate the eye matrix.
         // Finally, pass the result into worldView matrix.
 
-        worldView = Matrix4.Identity();
+        // Calculate the camera coordinate axes
+        Vector3 up = new Vector3(0, 1, 0);
+        Vector3 z = pos.sub(lookat);
+        z = z.unit_vector();
+        Vector3 x = Vector3.cross(up, z);
+        x = x.unit_vector();
+        Vector3 y = Vector3.cross(z, x);
+        y = y.unit_vector();
+
+        Matrix4 view = Matrix4.Identity();
+
+        // Set rotation part
+        view.m[0] = x.x; view.m[4] = x.y; view.m[8] = x.z;
+        view.m[1] = y.x; view.m[5] = y.y; view.m[9] = y.z;
+        view.m[2] = z.x; view.m[6] = z.y; view.m[10] = z.z;
+
+        // Set translation part
+        view.m[12] = -Vector3.dot(x, pos);
+        view.m[13] = -Vector3.dot(y, pos);
+        view.m[14] = -Vector3.dot(z, pos);
+
+        worldView = view;
+
+        // worldView = Matrix4.Identity();
     }
 }
