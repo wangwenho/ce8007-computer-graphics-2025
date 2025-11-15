@@ -74,17 +74,8 @@ void cameraControl(){
         if (key == 'q' || key == 'Q') cam_position.y += speed;
         if (key == 'e' || key == 'E') cam_position.y -= speed;
     }
-
-    // Mouse drag to rotate camera around lookat
-    if (mousePressed) {
-        float sensitivity = 0.01;
-        float dx = (mouseX - pmouseX) * sensitivity;
-        float dy = (mouseY - pmouseY) * sensitivity;
-        cam_position.x += dx;
-        cam_position.y += dy;
-    }
-
+    
     main_camera.setPositionOrientation(cam_position, lookat);
-
+    
     // main_camera.setPositionOrientation(cam_position, new Vector3(0,0,1));
 }
