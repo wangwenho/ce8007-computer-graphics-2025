@@ -93,7 +93,20 @@ public class GameObject {
         // TODO HW3
         // You need to calculate the model Matrix here.
 
-        return Matrix4.Identity();
+        // The order of transformations is Scale -> Rotation -> Translation
+        Matrix4 S = Matrix4.Scale(transform.scale);
+        Matrix4 RX = Matrix4.RotX(transform.rotation.x);
+        Matrix4 RY = Matrix4.RotY(transform.rotation.y);
+        Matrix4 RZ = Matrix4.RotZ(transform.rotation.z);
+        Matrix4 T = Matrix4.Trans(transform.position);
+        
+        // Rotation Z * Rotation Y * Rotation X
+        Matrix4 R = RZ.mult(RY).mult(RX);
+        
+        // Translation * Rotation * Scale
+        return T.mult(R).mult(S);
+
+        // return Matrix4.Identity();
 
     }
 
