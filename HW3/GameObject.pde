@@ -11,7 +11,8 @@ public class GameObject {
     GameObject(String fname) {
         transform = new Transform();
         setMesh(fname);
-        String[] sn = fname.split("\\\\");
+        // String[] sn = fname.split("\\\\");
+        String[] sn = fname.split("/");
         name = sn[sn.length - 1].substring(0, sn[sn.length - 1].length() - 4);
         shader = new Shader(new DepthVertexShader(), new DepthFragmentShader());
     }
@@ -35,6 +36,18 @@ public class GameObject {
             Vector3[] s_Position = new Vector3[3];
             for (int j = 0; j<gl_Position.length; j++) {
                 s_Position[j] = gl_Position[j].homogenized();
+                
+                Vector4 v = position[j].getVector4(1.0);
+                Vector4 v_model = localToWorld().mult(v);
+                Vector4 v_view = main_camera.worldView.mult(v_model);
+                Vector4 v_proj = main_camera.projection.mult(v_view);
+                println("model:", v);
+                println("world:", v_model);
+                println("view:", v_view);
+                println("proj:", v_proj);
+                println("ndc_z:", v_proj.z / v_proj.w);
+                // println("clip["+j+"]: z=" + gl_Position[j].z + " w=" + gl_Position[j].w + " ndc_z=" + (gl_Position[j].z / gl_Position[j].w));
+
             }
             Vector3[] boundbox = findBoundBox(s_Position);
             float minX = map(min( max(boundbox[0].x, -1.0 ), 1.0), -1.0, 1.0, 0.0, renderer_size.z - renderer_size.x);
@@ -112,21 +125,20 @@ public class GameObject {
         // TODO HW3
         // You need to calculate the model Matrix here.
 
-        // The order of transformations is Scale -> Rotation -> Translation
+        // Scale, Rotation, Translation matrices
         Matrix4 S = Matrix4.Scale(transform.scale);
         Matrix4 RX = Matrix4.RotX(transform.rotation.x);
         Matrix4 RY = Matrix4.RotY(transform.rotation.y);
         Matrix4 RZ = Matrix4.RotZ(transform.rotation.z);
         Matrix4 T = Matrix4.Trans(transform.position);
-        
-        // Rotation Z * Rotation Y * Rotation X
+
+        // Combined Rotation matrix R = RZ * RY * RX
         Matrix4 R = RZ.mult(RY).mult(RX);
-        
-        // Translation * Rotation * Scale
+
+        // Final Model Matrix: M = T * R * S
         return T.mult(R).mult(S);
 
         // return Matrix4.Identity();
-
     }
 
     Matrix4 worldToLocal() {

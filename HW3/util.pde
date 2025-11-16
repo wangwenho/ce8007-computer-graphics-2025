@@ -148,22 +148,27 @@ public float getDepth(float x, float y, Vector3[] vertex) {
     // You need to calculate the depth (z) in the triangle (vertex) based on the
     // positions x and y. and return the z value;
 
-    // Calculate barycentric coordinates for (x, y) in the triangle vertex[0], vertex[1], vertex[2]
+    // Decompose vertices
     Vector3 A = vertex[0];
     Vector3 B = vertex[1];
     Vector3 C = vertex[2];
 
+    // Calculate barycentric coordinates
     float denom = (B.y - C.y) * (A.x - C.x) + (C.x - B.x) * (A.y - C.y);
-    if (abs(denom) < 1e-6) return 0.0;
+    if (abs(denom) < 1e-6) return 1.0;
 
+    // Calculate barycentric weights
     float w1 = ((B.y - C.y) * (x - C.x) + (C.x - B.x) * (y - C.y)) / denom;
     float w2 = ((C.y - A.y) * (x - C.x) + (A.x - C.x) * (y - C.y)) / denom;
     float w3 = 1.0 - w1 - w2;
 
-    // Interpolate z using barycentric coordinates
+    // Interpolate z value
     float z = w1 * A.z + w2 * B.z + w3 * C.z;
+    z = constrain(z, 0.0, 1.0);
+    
     return z;
-
+    
+    // return 0.5;
     // return 0.0;
 }
 

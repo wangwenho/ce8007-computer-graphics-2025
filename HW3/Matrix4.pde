@@ -38,8 +38,10 @@ static public class Matrix4{
     makeIdentity();
     float c = cos(a);
     float s = sin(a);
-    m[5] = c;   m[6] = -s;
-    m[9] = s;   m[10] = c;
+    m[5] = c;
+    m[6] = -s;
+    m[9] = s;
+    m[10] = c;
 
     //  makeIdentity();
   }
@@ -50,8 +52,10 @@ static public class Matrix4{
     makeIdentity();
     float c = cos(a);
     float s = sin(a);
-    m[0] = c;   m[2] = s;
-    m[8] = -s;  m[10] = c;
+    m[0] = c;
+    m[2] = s;
+    m[8] = -s;
+    m[10] = c;
 
     // makeIdentity();
   }
@@ -63,8 +67,10 @@ static public class Matrix4{
     makeIdentity();
     float c = cos(a);
     float s = sin(a);
-    m[0] = c;   m[1] = -s;
-    m[4] = s;   m[5] = c;
+    m[0] = c;
+    m[1] = -s;
+    m[4] = s;
+    m[5] = c;
   }
   
   void makeTrans(Vector3 t) {

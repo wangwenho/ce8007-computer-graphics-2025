@@ -64,8 +64,10 @@ void cameraControl(){
     // Use setPositionOrientation(Vector3 position,Vector3 lookat) to modify the ViewMatrix.
     // Hint : Use keyboard event and mouse click event to change the position of the camera.
     
-    // WASDQE to move camera position
+    // Define movement speed
     float speed = 0.1;
+    
+    // Move camera based on key presses
     if (keyPressed) {
         if (key == 'w' || key == 'W') cam_position.z += speed;
         if (key == 's' || key == 'S') cam_position.z -= speed;
