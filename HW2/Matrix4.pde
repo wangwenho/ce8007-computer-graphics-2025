@@ -58,7 +58,7 @@ static class Matrix4{
   void makeRotZ(float a) {
      // TODO HW2
      // You need to implement the rotation of z-axis matrix here. (Yaw)
-    makeIdentity();
+    // makeIdentity();
 
     makeIdentity();
     float c = cos(a);

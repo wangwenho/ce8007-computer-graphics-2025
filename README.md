@@ -10,7 +10,7 @@
 - 詳細請見 [HW2](./HW2/README.md)
 
 ## HW3
-<!-- - 詳細請見 [HW3](./HW3/README.md) -->
+- 詳細請見 [HW3](./HW3/README.md)
 
 ## HW4
 <!-- - 詳細請見 [HW4](./HW4/README.md) -->

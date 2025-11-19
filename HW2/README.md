@@ -13,7 +13,7 @@
 ### Bonus
 | # | Content | Score | Finished |
 |---|---------|-------|----------|
-| 1 | Successfully implement SSAA | 1.5 Semester Score | ✅ |
+| 1 | Successfully implement SSAA. | 1.5 Semester Score | ✅ |
 
 ---
 
@@ -29,7 +29,7 @@
   - [`makeRotY()`](./Matrix4.pde)
   - [`makeRotZ()`](./Matrix4.pde)
 
-![gif](assets/demo_1.gif)
+![gif](./assets/demo_1.gif)
 
 ---
 
@@ -49,7 +49,7 @@
 - Implement the Sutherland Hodgman algorithm to clip a polygon against a convex clipping window.
   - [`Sutherland_Hodgman_algorithm()`](./util.pde)
 
-![gif](assets/demo_2.gif)
+![gif](./assets/demo_2.gif)
 
 ---
 
@@ -61,13 +61,15 @@ In line 22 of `Shape.drawShape()`, replace the original code:
 ```java
 for(int i = int(minmax[0].x);i<=minmax[1].x;i++){
     for(int j = int(minmax[0].y);j<=minmax[1].y;j++){
-        if(pnpoly(i,j,t_pos)){                    
+        if(pnpoly(i,j,t_pos)){
             drawPoint(i,j,color(100));
         }
     }
 }
 ```
+
 with the following code to implement 4x SSAA:
+
 ```java
 for(int i = int(minmax[0].x);i<=minmax[1].x;i++){
     for(int j = int(minmax[0].y);j<=minmax[1].y;j++){
