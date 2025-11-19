@@ -29,7 +29,7 @@
   - [`makeRotY()`](./Matrix4.pde)
   - [`makeRotZ()`](./Matrix4.pde)
 
-![gif](assets/demo_1.gif)
+![gif](./assets/demo_1.gif)
 
 ---
 
@@ -49,7 +49,7 @@
 - Implement the Sutherland Hodgman algorithm to clip a polygon against a convex clipping window.
   - [`Sutherland_Hodgman_algorithm()`](./util.pde)
 
-![gif](assets/demo_2.gif)
+![gif](./assets/demo_2.gif)
 
 ---
 
@@ -67,7 +67,9 @@ for(int i = int(minmax[0].x);i<=minmax[1].x;i++){
     }
 }
 ```
+
 with the following code to implement 4x SSAA:
+
 ```java
 for(int i = int(minmax[0].x);i<=minmax[1].x;i++){
     for(int j = int(minmax[0].y);j<=minmax[1].y;j++){

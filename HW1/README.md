@@ -28,11 +28,11 @@
 - Use Bresenham's line algorithm to draw lines.
   - [`CGLine_Bresenham()`](./util.pde)
 
-![gif](assets/line.gif)
+![gif](./assets/line.gif)
 
-![gif](assets/polygon.gif)
+![gif](./assets/polygon.gif)
 
-![gif](assets/pencil.gif)
+![gif](./assets/pencil.gif)
 
 ---
 
@@ -40,7 +40,7 @@
 - Use Midpoint circle algorithm to draw circles.
   - [`CGCircle_Midpoint()`](./util.pde)
 
-![gif](assets/circle.gif)
+![gif](./assets/circle.gif)
 
 ---
 
@@ -48,7 +48,7 @@
 - Use Midpoint ellipse algorithm to draw ellipses.
   - [`CGEllipse_Midpoint()`](./util.pde)
 
-![gif](assets/ellipse.gif)
+![gif](./assets/ellipse.gif)
 
 ---
 
@@ -58,7 +58,7 @@
 - Use De Casteljau's algorithm to draw curves.
   - [`CGCurve_DeCasteljau()`](./util.pde)
 
-![gif](assets/curve.gif)
+![gif](./assets/curve.gif)
 
 ---
 
@@ -66,7 +66,11 @@
 - Use white rectangle to cover the area.
   - [`CGEraser()`](./util.pde)
 
-![gif](assets/eraser.gif)
+![gif](./assets/eraser.gif)
+
+---
+
+### Bonus. Additional Features
 
 ---
 
