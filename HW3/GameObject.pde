@@ -11,9 +11,13 @@ public class GameObject {
     GameObject(String fname) {
         transform = new Transform();
         setMesh(fname);
-        // String[] sn = fname.split("\\\\");
-        String[] sn = fname.split("/");
-        name = sn[sn.length - 1].substring(0, sn[sn.length - 1].length() - 4);
+        String[] sn = fname.split("\\\\");
+        
+        // Handle both Windows and Unix-style paths
+        if (sn.length == 1)
+            sn = fname.split("/");
+        
+            name = sn[sn.length - 1].substring(0, sn[sn.length - 1].length() - 4);
         shader = new Shader(new DepthVertexShader(), new DepthFragmentShader());
     }
 
@@ -36,18 +40,6 @@ public class GameObject {
             Vector3[] s_Position = new Vector3[3];
             for (int j = 0; j<gl_Position.length; j++) {
                 s_Position[j] = gl_Position[j].homogenized();
-                
-                Vector4 v = position[j].getVector4(1.0);
-                Vector4 v_model = localToWorld().mult(v);
-                Vector4 v_view = main_camera.worldView.mult(v_model);
-                Vector4 v_proj = main_camera.projection.mult(v_view);
-                println("model:", v);
-                println("world:", v_model);
-                println("view:", v_view);
-                println("proj:", v_proj);
-                println("ndc_z:", v_proj.z / v_proj.w);
-                // println("clip["+j+"]: z=" + gl_Position[j].z + " w=" + gl_Position[j].w + " ndc_z=" + (gl_Position[j].z / gl_Position[j].w));
-
             }
             Vector3[] boundbox = findBoundBox(s_Position);
             float minX = map(min( max(boundbox[0].x, -1.0 ), 1.0), -1.0, 1.0, 0.0, renderer_size.z - renderer_size.x);
