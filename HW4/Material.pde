@@ -64,6 +64,11 @@ public class PhongMaterial extends Material {
 }
 
 public class FlatMaterial extends Material {
+    Vector3 Ka = new Vector3(0.3, 0.3, 0.3);
+    float Kd = 0.5;
+    float Ks = 0.5;
+    float m = 20;
+
     FlatMaterial() {
         shader = new Shader(new FlatVertexShader(), new FlatFragmentShader());
     }
@@ -75,12 +80,17 @@ public class FlatMaterial extends Material {
         // TODO HW4
         // pass the uniform you need into the shader.
 
-        Vector4[][] r = shader.vertex.main(new Object[] { position }, new Object[] { MVP });
+        Vector3[] normal = triangle.normal;
+        Vector4[][] r = shader.vertex.main(new Object[] { position, normal }, new Object[] { MVP, M });
+
+        // Vector4[][] r = shader.vertex.main(new Object[] { position }, new Object[] { MVP });
         return r;
     }
 
     Vector4 fragmentShader(Vector3 position, Vector4[] varing) {
-        return shader.fragment.main(new Object[] { position });
+        // return shader.fragment.main(new Object[] { position });
+        return shader.fragment
+                .main(new Object[] { position, varing[0].xyz(), varing[1].xyz(), albedo, new Vector3(Kd, Ks, m) });
     }
 }
 
@@ -96,12 +106,16 @@ public class GouraudMaterial extends Material {
         // TODO HW4
         // pass the uniform you need into the shader.
 
-        Vector4[][] r = shader.vertex.main(new Object[] { position }, new Object[] { MVP });
+        Vector3[] normal = triangle.normal;
+        Vector4[][] r = shader.vertex.main(new Object[] { position, normal, albedo }, new Object[] { MVP, M });
+
+        // Vector4[][] r = shader.vertex.main(new Object[] { position }, new Object[] { MVP });
         return r;
     }
 
     Vector4 fragmentShader(Vector3 position, Vector4[] varing) {
-        return shader.fragment.main(new Object[] { position });
+        // return shader.fragment.main(new Object[] { position });
+        return shader.fragment.main(new Object[] { position, varing[0] });
     }
 }
 

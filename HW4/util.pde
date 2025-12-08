@@ -174,17 +174,53 @@ public float getDepth(float x, float y, Vector3[] vertex) {
 
 float[] barycentric(Vector3 P, Vector4[] verts) {
 
-    Vector3 A = verts[0].homogenized();
-    Vector3 B = verts[1].homogenized();
-    Vector3 C = verts[2].homogenized();
+    // Vector3 A = verts[0].homogenized();
+    // Vector3 B = verts[1].homogenized();
+    // Vector3 C = verts[2].homogenized();
 
     // TODO HW4
     // Calculate the barycentric coordinates of point P in the triangle verts using
     // the barycentric coordinate system.
 
-    float[] result = { 0.0, 0.0, 0.0 };
+    // Convert verts to 3D points
+    Vector3 A = verts[0].homogenized();
+    Vector3 B = verts[1].homogenized();
+    Vector3 C = verts[2].homogenized();
 
+    // Calculate vectors
+    Vector3 v0 = B.sub(A);
+    Vector3 v1 = C.sub(A);
+    Vector3 v2 = P.sub(A);
+
+    float d00 = Vector3.dot(v0, v0);
+    float d01 = Vector3.dot(v0, v1);
+    float d11 = Vector3.dot(v1, v1);
+    float d20 = Vector3.dot(v2, v0);
+    float d21 = Vector3.dot(v2, v1);
+
+    float denom = d00 * d11 - d01 * d01;
+    float v = (d11 * d20 - d01 * d21) / denom;
+    float w = (d00 * d21 - d01 * d20) / denom;
+    float u = 1.0 - v - w;
+
+    // Perspective-correct interpolation
+    float wA = verts[0].w;
+    float wB = verts[1].w;
+    float wC = verts[2].w;
+    u /= wA;
+    v /= wB;
+    w /= wC;
+    float sum = u + v + w;
+    u /= sum;
+    v /= sum;
+    w /= sum;
+
+    float[] result = { u, v, w };
     return result;
+
+    // float[] result = { 0.0, 0.0, 0.0 };
+
+    // return result;
 }
 
 Vector3 interpolation(float[] abg, Vector3[] v) {
