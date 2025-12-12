@@ -9,7 +9,7 @@ util::barycentric(Vector3 P, Vector4[] verts)
 
 For this task, you need to calculate the barycentric coordinates of the point.Given a the three vertices inside a triangle
 
-$A,B,C$(which is passed in as Vector4$AW,BW,CW$ but at the beginning of the code we have converted back to Vector3 for you) and a point P inside the triangle, please interpret these values as the barycentric coordinates α,β,γ of that triangle.
+$A,B,C$(which is passed in as Vector4 $AW,BW,CW$ but at the beginning of the code we have converted back to Vector3 for you) and a point P inside the triangle, please interpret these values as the barycentric coordinates α,β,γ of that triangle.
 
 The GameObject will use this function to interpolate the values returned from the vertex shader and pass them to the fragment shader.
 
