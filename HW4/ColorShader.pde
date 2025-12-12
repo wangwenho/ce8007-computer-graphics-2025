@@ -93,10 +93,20 @@ public class FlatVertexShader extends VertexShader {
         Vector4[] w_position = new Vector4[3];
         Vector4[] w_normal = new Vector4[3];
 
-        for (int i = 0; i < gl_Position.length; i++) {
+        // Calculate face normal and position
+        Vector3 p0 = M.mult(aVertexPosition[0].getVector4(1.0)).xyz();
+        Vector3 p1 = M.mult(aVertexPosition[1].getVector4(1.0)).xyz();
+        Vector3 p2 = M.mult(aVertexPosition[2].getVector4(1.0)).xyz();
+        Vector3 face_normal = Vector3.cross(Vector3.sub(p1, p0), Vector3.sub(p2, p0)).unit_vector();
+        
+        // Choose face position as the first vertex position
+        Vector3 face_position = p0;
+
+        // Set same normal and position for all vertices
+        for (int i = 0; i < 3; i++) {
             gl_Position[i] = MVP.mult(aVertexPosition[i].getVector4(1.0));
-            w_position[i] = M.mult(aVertexPosition[i].getVector4(1.0));
-            w_normal[i] = M.mult(aVertexNormal[i].getVector4(0.0));
+            w_position[i] = new Vector4(face_position, 1.0); // 全部設一樣
+            w_normal[i] = new Vector4(face_normal, 0.0);     // 全部設一樣
         }
 
         Vector4[][] result = { gl_Position, w_position, w_normal };
@@ -141,12 +151,14 @@ public class FlatFragmentShader extends FragmentShader {
         Vector3 V = cam.transform.position.sub(w_position).unit_vector();
         Vector3 R = N.mult(2 * Vector3.dot(N, L)).sub(L).unit_vector();
 
+        // Calculate components
         Vector3 ambient = albedo.mult(0.1);
         float diff = max(Vector3.dot(N, L), 0.0);
         Vector3 diffuse = albedo.mult(kdksm.x * diff * light.intensity);
         float spec = pow(max(Vector3.dot(R, V), 0.0), kdksm.z);
         Vector3 specular = new Vector3(1.0, 1.0, 1.0).mult(kdksm.y * spec * light.intensity);
 
+        // Combine components
         Vector3 final_color = ambient.add(diffuse).add(specular);
         final_color.x = constrain(final_color.x, 0.0, 1.0);
         final_color.y = constrain(final_color.y, 0.0, 1.0);
@@ -184,6 +196,7 @@ public class GouraudVertexShader extends VertexShader {
         Vector4[] gl_Position = new Vector4[3];
         Vector4[] colors = new Vector4[3];
 
+        // Calculate color at each vertex
         for (int i = 0; i < gl_Position.length; i++) {
             gl_Position[i] = MVP.mult(aVertexPosition[i].getVector4(1.0));
             Vector3 w_pos = M.mult(aVertexPosition[i].getVector4(1.0)).xyz();
